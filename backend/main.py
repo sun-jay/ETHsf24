@@ -8,6 +8,7 @@ import pandas as pd
 import numpy as np
 
 
+from call_gpt import gpt
 from clipModel import ClipModel
 from walrus import upload, get
 
@@ -41,15 +42,17 @@ def parse_video(path, classes = ["regular image", "inappropriate threat"]):
     rate = int(cap.get(cv2.CAP_PROP_FPS))
     res = []
 
+    ims = []
     # sample a frame 4 times a second and classify it
     for i in range(0, length, rate//4):
         cap.set(1, i)
         ret, frame = cap.read()
         if ret:
             img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            ims.append(img)
             res.append(clip_model.classify_image(img, classes))
 
-    return res
+    return zip(res, ims)
 
 @app.post("/upload/")
 async def upload_file(file: UploadFile = File(...)):
@@ -78,7 +81,8 @@ async def upload_file(file: UploadFile = File(...)):
     classes = ["regular image", "rude gesture or threat"]
     res = parse_video(file_location, classes)
 
-    for r in res:
+    for r,im in res:
+
         if r[classes[1]] > 0.5:
             print("Inappropriate content detected!")
 
@@ -86,8 +90,11 @@ async def upload_file(file: UploadFile = File(...)):
             new_row = pd.DataFrame([{'filename': file.filename, 'status': 'False'}])
             df = pd.concat([df, new_row], ignore_index=True)
             df.to_csv('upload_attempts.csv', index=False)
+
+            # im = Image.open(file_location)
+            mes = gpt("What is the threat in this image? In one sentence, describe the threat.", [im])
            
-            return JSONResponse(content={"filename": file.filename, "message": "Violent weapon detected!", 'status': 'False'})
+            return JSONResponse(content={"filename": file.filename, "message": mes, 'status': 'False'})
     
     print("No inappropriate content detected.")
     print("Uploading to Walrus...")
