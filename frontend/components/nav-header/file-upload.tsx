@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { DynamicWidget, useDynamicContext } from "@dynamic-labs/sdk-react-core";
+
 
 // Define the props type
 interface FileUploadPopupProps {
@@ -7,6 +9,7 @@ interface FileUploadPopupProps {
 }
 
 const FileUploadPopup: React.FC<FileUploadPopupProps> = ({ isOpen, onClose }) => {
+  const { primaryWallet } = useDynamicContext();
   const [isUploading, setIsUploading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadMessage, setUploadMessage] = useState('');
@@ -35,6 +38,9 @@ const FileUploadPopup: React.FC<FileUploadPopupProps> = ({ isOpen, onClose }) =>
     try {
       const response = await fetch('http://localhost:8000/upload/', {
         method: 'POST',
+        headers: {
+          'Wallet-Address': primaryWallet?.address == null ? '' : primaryWallet.address,
+        },
         body: formData,
       });
 

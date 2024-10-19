@@ -17,7 +17,7 @@ import { IYoutubeSearchItem } from "@/lib/ui/models/youtube-search-list.model";
 import { useRouter } from "next/router";
 import { setVideoSearchQuery } from "@/store/reducers/video.reducer";
 import SimplePopup from './file-upload';
-
+import { DynamicWidget, useDynamicContext } from "@dynamic-labs/sdk-react-core";
 
 import { FaPlus, FaUpload } from 'react-icons/fa'; // Importing icons from react-icon   s
 import { totalmem } from "os";
@@ -27,6 +27,8 @@ type Anchor = 'left' | 'right';
 
 
 export default function NavHeader() {
+    const { primaryWallet } = useDynamicContext();
+
     const dispatch = useAppDispatch();
     const router = useRouter();
     const theme = useAppSelector(selectSettingsTheme);
@@ -93,7 +95,6 @@ export default function NavHeader() {
 
     return (
         <Fragment>
-
             <div className={styles.host}>
                 <div className={styles.header}>
                     <div className={styles.header__start}>
@@ -129,7 +130,12 @@ export default function NavHeader() {
                                 <img src={'logo.png'} style={{ width: '40px', height: '40px' }}></img>
                             </div>
                         </Link>
+
+                        <DynamicWidget />
+                        {primaryWallet?.address}
                     </div>
+
+
 
                     <div className={styles.header__center}>
                         <SearchBox inputChangeHandler={inputChangeHandler} />

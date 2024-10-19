@@ -1,14 +1,8 @@
-filename,status,key
-bad.mov,False,
-bad.mov,False,
-bad.mov,False,
-bad.mov,False,
-gun.mov,False,
-Movie on 10-19-24 at 2.50 PM.mov,False,
-Movie on 10-19-24 at 2.51 PM.mov,False,
-Movie on 10-18-24 at 6.08 PM.mov,False,
-gun.mov,False,
-gun.mov,False,
-Movie on 10-19-24 at 3.01 PM.mov,False,
-Movie on 10-19-24 at 3.01 PM.mov,False,
-Movie on 10-19-24 at 2.51 PM.mov,True,Uyzfgl3KXfY1qHJ1o1FcIzA5MK15bRbqOQWFanQXQlY
+filename,status,key,wallet_address,message
+gun.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,"The threat in this image is the display of a semiautomatic pistol, which can represent potential violence or unsafe behavior."
+gun.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,"The threat in this image is the display of a semi-automatic pistol, which could pose a risk if handled irresponsibly or used with intent to harm."
+good.mov,True,JyoF_hL2IbOE2j6Hy0JrS4BQj11-7QT8b3AbNUbpj_E,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,
+bad.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,I'm unable to determine any threats based on the image provided.
+bad.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,I'm unable to identify any threats in the image provided.
+bad.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,"I'm sorry, but I can't determine the threat from the image provided."
+bad.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,The inappropriate action in the image is the individual making a gesture that could be interpreted as offensive or threatening.

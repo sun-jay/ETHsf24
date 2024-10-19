@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Header
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os
@@ -55,7 +55,11 @@ def parse_video(path, classes = ["regular image", "inappropriate threat"]):
     return zip(res, ims)
 
 @app.post("/upload/")
-async def upload_file(file: UploadFile = File(...)):
+async def upload_file(file: UploadFile = File(...), wallet_address: str = Header(None)):
+    if wallet_address:
+        print(f"Wallet address received: {wallet_address}")
+
+
     file_location = os.path.join(UPLOAD_DIR, file.filename)
 
     with open(file_location, "wb") as buffer:
@@ -78,21 +82,22 @@ async def upload_file(file: UploadFile = File(...)):
            
     #         return JSONResponse(content={"filename": file.filename, "message": message, 'status': 'False'})
         
-    classes = ["regular image", "rude gesture or threat"]
+    classes = ["regular image or nice person", "rude gesture or threat"]
     res = parse_video(file_location, classes)
 
     for r,im in res:
 
         if r[classes[1]] > 0.5:
             print("Inappropriate content detected!")
-
+            im.show()
+            mes = gpt("What is the threat or innapropriate action in this image? In one sentence, describe the threat.", [im])
+            
+            new_row = pd.DataFrame([{'filename': file.filename, 'status': 'False', 'wallet_address': wallet_address, 'message': mes}])
             df = pd.read_csv('upload_attempts.csv')
-            new_row = pd.DataFrame([{'filename': file.filename, 'status': 'False'}])
             df = pd.concat([df, new_row], ignore_index=True)
             df.to_csv('upload_attempts.csv', index=False)
 
             # im = Image.open(file_location)
-            mes = gpt("What is the threat in this image? In one sentence, describe the threat.", [im])
            
             return JSONResponse(content={"filename": file.filename, "message": mes, 'status': 'False'})
     
@@ -104,7 +109,7 @@ async def upload_file(file: UploadFile = File(...)):
 
     # filename,status,key add to upload_attempts.csv 
     df = pd.read_csv('upload_attempts.csv')
-    new_row = pd.DataFrame([{'filename': file.filename, 'status': 'True', 'key': id}])
+    new_row = pd.DataFrame([{'filename': file.filename, 'status': 'True', 'key': id, 'wallet_address': wallet_address}])
     df = pd.concat([df, new_row], ignore_index=True)
     df.to_csv('upload_attempts.csv', index=False)
 
