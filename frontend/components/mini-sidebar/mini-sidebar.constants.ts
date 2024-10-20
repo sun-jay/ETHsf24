@@ -8,15 +8,15 @@ export const MINI_SIDEBAR_NAV_ENDPOINTS: INavLink[] = [
     type: 'top',
   },
   {
-    text: 'History',
+    text: 'Logs',
     url: 'history',
     icon: 'history',
     type: 'bottom',
   },
   {
-    text: 'Liked videos',
+    text: 'Model Weights',
     url: 'likes',
-    icon: 'thumb_up_off_alt',
+    icon: 'M',
     type: 'bottom',
   },
 ];

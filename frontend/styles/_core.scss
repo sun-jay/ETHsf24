@@ -106,3 +106,54 @@ a {
         font-size: 14px;
     }
 }
+
+
+
+
+
+/* Ensure the spline container fills the entire viewport */
+.spline-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  /* Style for the button overlay */
+  .download-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px 30px;
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    background: rgba(128, 128, 128, 0.3); /* Semi-transparent gray background */
+    border: none;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);  /* Apply blur effect to the background */
+    cursor: pointer;
+    z-index: 10; /* Ensure the button stays on top */
+    pointer-events: auto;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+  }
+  
+  /* Hover effect: slightly increase size and add shadow */
+  .download-button:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Active (click) effect: simulate a bounce */
+  .download-button:active {
+    transform: translate(-50%, -50%) scale(0.95);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Optional: Set the background color */
+  body {
+    margin: 0;
+    background-color: black;
+  }
+  

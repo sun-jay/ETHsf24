@@ -1,3 +1,7 @@
+ADDR =  '0x77d8e62424085b142631CA8B3c17684Bcfd722bE'
+
+
+
 from fastapi import FastAPI, File, UploadFile, Header
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -86,7 +90,7 @@ async def upload_file(file: UploadFile = File(...), wallet_address: str = Header
     classes = ["regular image or nice person", "rude gesture or threat"]
     res = parse_video(file_location, classes)
 
-    addr = '0x4d0cF36E43ea99C020676f82FA39A096d97502DD'
+    addr = ADDR
 
     for r,im in res:
 

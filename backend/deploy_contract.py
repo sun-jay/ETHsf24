@@ -57,6 +57,6 @@ print()
 
 addr = tx_receipt.contractAddress
 
-send_to_chain("filename", False, 'key', 'message', addr=addr)
-send_to_chain("filename", False, 'key', 'message', addr=addr)
+# send_to_chain("filename", False, 'key', 'message', addr=addr)
+# send_to_chain("filename", False, 'key', 'message', addr=addr)
 

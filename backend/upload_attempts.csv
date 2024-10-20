@@ -1,3 +1,10 @@
 filename,status,key,wallet_address,message
 good.mov,True,JyoF_hL2IbOE2j6Hy0JrS4BQj11-7QT8b3AbNUbpj_E,,
 gun.mov,False,,,"The threat in this image is the display of a firearm, which may promote unsafe attitudes toward gun handling or violence."
+alright.mov,True,w970e4ns4twYAT3971SjwhbE-Tu6aiLqirM0jRIJdbo,,
+Movie on 10-19-24 at 7.52 PM.mov,False,,,"The inappropriate action in this image is the display of thumbs down, which can signify disapproval or contempt, potentially provoking negative feelings in others."
+gun.mov,False,,,"The threat in this image is the display of a semiautomatic pistol, which can promote gun violence or unsafe handling of firearms."
+bad.mov,False,,,I'm unable to identify any specific threats or inappropriate actions in the image provided.
+bad.mov,False,,,The inappropriate action in this image appears to be the individual making a hand gesture that could be interpreted as threatening or offensive.
+good.mov,True,JyoF_hL2IbOE2j6Hy0JrS4BQj11-7QT8b3AbNUbpj_E,,
+gun.mov,False,,,"The threat in this image is the display of a semiautomatic pistol, which can be associated with gun violence and inappropriate use of firearms."
