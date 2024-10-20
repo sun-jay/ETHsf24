@@ -11,6 +11,7 @@ import numpy as np
 from call_gpt import gpt
 from clipModel import ClipModel
 from walrus import upload, get
+from run_contract import send_to_chain
 
 app = FastAPI()
 
@@ -89,13 +90,15 @@ async def upload_file(file: UploadFile = File(...), wallet_address: str = Header
 
         if r[classes[1]] > 0.5:
             print("Inappropriate content detected!")
-            im.show()
+            # im.show()
             mes = gpt("What is the threat or innapropriate action in this image? In one sentence, describe the threat.", [im])
             
             new_row = pd.DataFrame([{'filename': file.filename, 'status': 'False', 'wallet_address': wallet_address, 'message': mes}])
             df = pd.read_csv('upload_attempts.csv')
             df = pd.concat([df, new_row], ignore_index=True)
             df.to_csv('upload_attempts.csv', index=False)
+            # send_to_chain(filename, status, key, message):
+            send_to_chain(file.filename, False, '', mes, addr = '0x5DD029E6d12Cf2a5750cb02eE9BC8a7302914271')
 
             # im = Image.open(file_location)
            
@@ -112,6 +115,8 @@ async def upload_file(file: UploadFile = File(...), wallet_address: str = Header
     new_row = pd.DataFrame([{'filename': file.filename, 'status': 'True', 'key': id, 'wallet_address': wallet_address}])
     df = pd.concat([df, new_row], ignore_index=True)
     df.to_csv('upload_attempts.csv', index=False)
+    # send_to_chain(filename, status, key, message):
+    send_to_chain(file.filename, True, id, '', addr = '0x5DD029E6d12Cf2a5750cb02eE9BC8a7302914271')
 
     # add to upload_attempts.csv
     return JSONResponse(content={"filename": file.filename, "message": "No inappropriate content detected, upload sucessful", 'status': 'True'})

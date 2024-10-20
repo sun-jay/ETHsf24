@@ -1,6 +1,9 @@
 from web3 import Web3
 import dotenv
 import os
+import json
+
+from run_contract import send_to_chain
 
 dotenv.load_dotenv()
 
@@ -11,123 +14,9 @@ private_key = os.getenv("WALLET_KEY")
 private_key = '0x' + private_key
 print(private_key)
 
-# Replace these with your actual contract ABI and bytecode
-abi = [
-	{
-		"inputs": [],
-		"name": "getAllUploads",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "filename",
-						"type": "string"
-					},
-					{
-						"internalType": "bool",
-						"name": "status",
-						"type": "bool"
-					},
-					{
-						"internalType": "string",
-						"name": "key",
-						"type": "string"
-					},
-					{
-						"internalType": "address",
-						"name": "walletAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "string",
-						"name": "message",
-						"type": "string"
-					}
-				],
-				"internalType": "struct VideoUploadTracker.VideoInfo[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_user",
-				"type": "address"
-			}
-		],
-		"name": "getAllUploadsByUser",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "filename",
-						"type": "string"
-					},
-					{
-						"internalType": "bool",
-						"name": "status",
-						"type": "bool"
-					},
-					{
-						"internalType": "string",
-						"name": "key",
-						"type": "string"
-					},
-					{
-						"internalType": "address",
-						"name": "walletAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "string",
-						"name": "message",
-						"type": "string"
-					}
-				],
-				"internalType": "struct VideoUploadTracker.VideoInfo[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_filename",
-				"type": "string"
-			},
-			{
-				"internalType": "bool",
-				"name": "_status",
-				"type": "bool"
-			},
-			{
-				"internalType": "string",
-				"name": "_key",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_message",
-				"type": "string"
-			}
-		],
-		"name": "uploadVideoInformation",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	}
-]
+# load son from txt file
+abi = json.loads(open("contract_abi.txt", "r").read())
+
 with open("contract_bytes.txt", "r") as f:
     bytecode = f.read()
 
@@ -162,4 +51,12 @@ tx_hash = web3.eth.send_raw_transaction(signed_transaction.raw_transaction)
 tx_receipt = web3.eth.wait_for_transaction_receipt(tx_hash)
 
 # Output the deployed contract address
+print()
 print(f"Contract deployed at address: {tx_receipt.contractAddress}")
+print()
+
+addr = tx_receipt.contractAddress
+
+send_to_chain("filename", False, 'key', 'message', addr=addr)
+send_to_chain("filename", False, 'key', 'message', addr=addr)
+

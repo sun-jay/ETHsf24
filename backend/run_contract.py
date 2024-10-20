@@ -1,180 +1,63 @@
 from web3 import Web3
 import dotenv
 import os
+import json
 
-# Load environment variables
-dotenv.load_dotenv()
+def send_to_chain(filename, status, key, message, addr='0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A'):
 
-# SKALE Testnet RPC URL and wallet details
-skale_rpc_url = "https://testnet.skalenodes.com/v1/giant-half-dual-testnet"
-wallet_address = "0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A"
-private_key = os.getenv("WALLET_KEY")
-private_key = '0x' + private_key
+    # Load environment variables
+    dotenv.load_dotenv()
 
-# ABI of your contract
-abi = [
-	{
-		"inputs": [],
-		"name": "getAllUploads",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "filename",
-						"type": "string"
-					},
-					{
-						"internalType": "bool",
-						"name": "status",
-						"type": "bool"
-					},
-					{
-						"internalType": "string",
-						"name": "key",
-						"type": "string"
-					},
-					{
-						"internalType": "address",
-						"name": "walletAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "string",
-						"name": "message",
-						"type": "string"
-					}
-				],
-				"internalType": "struct VideoUploadTracker.VideoInfo[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_user",
-				"type": "address"
-			}
-		],
-		"name": "getAllUploadsByUser",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "string",
-						"name": "filename",
-						"type": "string"
-					},
-					{
-						"internalType": "bool",
-						"name": "status",
-						"type": "bool"
-					},
-					{
-						"internalType": "string",
-						"name": "key",
-						"type": "string"
-					},
-					{
-						"internalType": "address",
-						"name": "walletAddress",
-						"type": "address"
-					},
-					{
-						"internalType": "string",
-						"name": "message",
-						"type": "string"
-					}
-				],
-				"internalType": "struct VideoUploadTracker.VideoInfo[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_filename",
-				"type": "string"
-			},
-			{
-				"internalType": "bool",
-				"name": "_status",
-				"type": "bool"
-			},
-			{
-				"internalType": "string",
-				"name": "_key",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_message",
-				"type": "string"
-			}
-		],
-		"name": "uploadVideoInformation",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	}
-]
+    # SKALE Testnet RPC URL and wallet details
+    skale_rpc_url = "https://testnet.skalenodes.com/v1/giant-half-dual-testnet"
+    wallet_address = "0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A"
+    private_key = os.getenv("WALLET_KEY")
+    private_key = '0x' + private_key
 
-# Contract address (replace with the deployed contract address)
-contract_address = "0x3b0a10b2720E4FAb80be6A453C884F798D014CeE"  # Use the contract address from the deployment receipt
+    # ABI of your contract
+    abi = json.loads(open("contract_abi.txt", "r").read())
 
-# Connect to SKALE Testnet
-web3 = Web3(Web3.HTTPProvider(skale_rpc_url))
+    # Contract address (replace with the deployed contract address)
+    contract_address = addr
 
-# Ensure we're connected
-if not web3.is_connected():
-    raise Exception("Failed to connect to SKALE Testnet")
-print("Connected to SKALE Testnet")
+    # Connect to SKALE Testnet
+    web3 = Web3(Web3.HTTPProvider(skale_rpc_url))
 
-# Get the contract instance
-contract = web3.eth.contract(address=contract_address, abi=abi)
+    # Ensure we're connected
+    if not web3.is_connected():
+        raise Exception("Failed to connect to SKALE Testnet")
+    print("Connected to SKALE Testnet")
 
-# Define the information you want to upload
-filename = "example_video.mp4"
-status = True  # Boolean value for status
-key = "unique_video_key_123"
-message = "This is an example video upload."
+    # Get the contract instance
+    contract = web3.eth.contract(address=contract_address, abi=abi)
 
-# Get the nonce (transaction count) for the wallet
-nonce = web3.eth.get_transaction_count(wallet_address)
 
-# Build the transaction to call the uploadVideoInformation function
-transaction = contract.functions.uploadVideoInformation(
-    filename,  # _filename (string)
-    status,    # _status (bool)
-    key,       # _key (string)
-    message    # _message (string)
-).build_transaction({
-    'from': wallet_address,
-    'nonce': nonce,
-    'gas': 2000000,  # Adjust the gas limit based on your function complexity
-    'gasPrice': web3.to_wei('1', 'gwei'),  # SKALE network, low gas fees
-    'chainId': 974399131  # Chain ID for SKALE
-})
+    # Get the nonce (transaction count) for the wallet
+    nonce = web3.eth.get_transaction_count(wallet_address)
 
-# Sign the transaction with your private key
-signed_transaction = web3.eth.account.sign_transaction(transaction, private_key)
+    # Build the transaction to call the uploadVideoInformation function
+    transaction = contract.functions.uploadVideoInformation(
+        filename,  # _filename (string)
+        status,    # _status (bool)
+        key,       # _key (string)
+        message    # _message (string)
+    ).build_transaction({
+        'from': wallet_address,
+        'nonce': nonce,
+        'gas': 2000000,  # Adjust the gas limit based on your function complexity
+        'gasPrice': web3.to_wei('1', 'gwei'),  # SKALE network, low gas fees
+        'chainId': 974399131  # Chain ID for SKALE
+    })
 
-# Send the signed transaction
-tx_hash = web3.eth.send_raw_transaction(signed_transaction.raw_transaction)
+    # Sign the transaction with your private key
+    signed_transaction = web3.eth.account.sign_transaction(transaction, private_key)
 
-# Wait for the transaction receipt
-tx_receipt = web3.eth.wait_for_transaction_receipt(tx_hash)
+    # Send the signed transaction
+    tx_hash = web3.eth.send_raw_transaction(signed_transaction.raw_transaction)
 
-# Output the transaction hash
-print(f"Transaction hash: {web3.to_hex(tx_hash)}")
-print(f"Transaction status: {tx_receipt.status}")
+    # Wait for the transaction receipt
+    tx_receipt = web3.eth.wait_for_transaction_receipt(tx_hash)
+
+    # Output the transaction hash
+    print(f"Transaction hash: {web3.to_hex(tx_hash)}")
+    print(f"Transaction status: {tx_receipt.status}")

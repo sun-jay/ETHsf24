@@ -6,3 +6,5 @@ bad.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,I'm unable to determin
 bad.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,I'm unable to identify any threats in the image provided.
 bad.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,"I'm sorry, but I can't determine the threat from the image provided."
 bad.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,The inappropriate action in the image is the individual making a gesture that could be interpreted as offensive or threatening.
+gun.mov,False,,,"The threat in this image is the depiction of a semi-automatic pistol, which can be associated with violence or illegal activities."
+gun.mov,False,,,"The threat in this image is the presence of a semiautomatic pistol displayed on a mobile device, which can imply a potential for gun-related violence or unsafe handling of firearms."

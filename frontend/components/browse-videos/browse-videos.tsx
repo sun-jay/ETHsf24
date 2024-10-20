@@ -14,10 +14,15 @@ import BrowseVideosEmpty from './browse-videos-empty/browse-videos-empty';
 import BrowseVideosError from './browse-videos-error/browse-videos-error';
 import CustomVideo from './custom-video';
 import Link from 'next/link';
+import {get_items} from './web3.js'
 
 export default function BrowserVideos() {
     const [videoIds, setVideoIds] = useState<string | undefined>();
     const [customVideoItems, setCustomVideoItems] = useState<any[]>([]); // State for custom video items
+
+    const [chainVideoItems, setChainVideoItems] = useState<any[]>([]); // State for custom video items
+
+
     const searchQuery = useAppSelector(selectSearchQuery);
     const { fetchSeachItems, searchItems, isSearchItemsLoading, searchItemsError } = useSearchList();
     const { fetchVideoItems, videoItems } = useVideoList();
@@ -60,6 +65,47 @@ export default function BrowserVideos() {
 
         fetchCustomItems();
     }, []); // This runs on mount (empty dependency array)
+
+    useEffect(() => {
+
+        const run = async () => {
+            try {
+              // Fetch items from the chain
+              const p = await get_items();
+              console.log("RES FROM CHAIN", p); // Logs the Proxy(Result) object
+        
+              // Parse the Proxy(Result) items into an array of JSON objects
+              interface Video {
+                filename: string;
+                status: string;
+                key: string;
+                sender: string;
+                message: string;
+              }
+              
+              const parsedVideos: Video[] = p.map((video: [string, string, string, string, string], index: number) => {
+                return {
+                  filename: video[0],  // Assuming video[0] is filename
+                  status: video[1],    // Assuming video[1] is status
+                  key: video[2],       // Assuming video[2] is key
+                  sender: video[3],    // Assuming video[3] is sender
+                  message: video[4],   // Assuming video[4] is message
+                };
+              });
+        
+              // Save the parsed array into state
+              setChainVideoItems(parsedVideos);
+              console.log("Parsed Chain Videos:", parsedVideos); // Log the parsed JSONs
+        
+            } catch (error) {
+              console.error("Error fetching or parsing videos:", error);
+            }
+          };
+
+        run();
+
+        
+    }, []);
 
     if (searchItemsError) {
         return <BrowseVideosError />;
