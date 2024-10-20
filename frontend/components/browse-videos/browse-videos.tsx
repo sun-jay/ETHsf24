@@ -135,9 +135,9 @@ export default function BrowserVideos() {
                     {/* Render the custom video items */}
                     {Array.isArray(chainVideoItems) && chainVideoItems.length > 0 && (
                         <div>
-                            <h2>Custom Video Items</h2>
+                            <h2 style={{ marginBottom: '30px', color: 'white'}}>Uploaded Videos: </h2>
                             {chainVideoItems.map((item, index) => (
-                                <div key={index} className={styles.customVideoItem}>
+                                <div key={index} className={styles.customVideoItem} style={{ marginBottom: '30px' }}>
                                     <CustomVideo
                                         blobID={item.key} // Pass blobID
                                         title={item.filename} // Pass title or filename

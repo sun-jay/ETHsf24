@@ -37,7 +37,7 @@ const CustomVideo: React.FC<CustomVideoProps> = ({ blobID, title }) => {
     }, [blobID]);
 
     if (isLoading) {
-        return <p style={{ color: 'white' }}>Retreiving Video From Walrus</p>; // White loading text
+        return <p style={{ color: 'white' }}>Retrieving Video From Walrus</p>; // White loading text
     }
 
     if (!videoUrl) {
@@ -46,8 +46,10 @@ const CustomVideo: React.FC<CustomVideoProps> = ({ blobID, title }) => {
 
     return (
         <div style={{ color: 'white' }}>
-                        <h1>{title}</h1>
-            <ReactPlayer url={videoUrl} controls />
+            <ReactPlayer url={videoUrl} controls style={{ marginBottom: '20px' }} />  {/* Margin below video */}
+            <h1 style={{ marginTop: '10px', marginBottom: '30px', fontSize: '1.5rem', textAlign: 'left' }}>
+                {title}
+            </h1> {/* Title with margin beneath it */}
         </div>
     );
 };
