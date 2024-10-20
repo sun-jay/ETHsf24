@@ -65,7 +65,7 @@ export default function ItemsTable() {
 
   return (
     <div className="table-container">
-      <h2>Items from get_items</h2>
+      <h2>Moderation History:</h2>
       <table className="video-table">
         <thead>
           <tr>

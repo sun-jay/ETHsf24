@@ -12,10 +12,17 @@ import VideoThumbnail from "@/lib/ui/components/video-thumbnail/video-thumbnail"
 import Link from "next/link";
 
 import ItemsTable from './table';
+import Ming from '../likes/spl'
 
 
 export default function HistoryPage() {
    return (
+   <>
     <ItemsTable />
+    <div style={{ top: 0, left: 0, width: '100%', height: '100%' }}>
+      <Ming />
+    </div>
+    
+    </>
     );
 }

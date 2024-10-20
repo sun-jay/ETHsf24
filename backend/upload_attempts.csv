@@ -8,3 +8,6 @@ bad.mov,False,,,I'm unable to identify any specific threats or inappropriate act
 bad.mov,False,,,The inappropriate action in this image appears to be the individual making a hand gesture that could be interpreted as threatening or offensive.
 good.mov,True,JyoF_hL2IbOE2j6Hy0JrS4BQj11-7QT8b3AbNUbpj_E,,
 gun.mov,False,,,"The threat in this image is the display of a semiautomatic pistol, which can be associated with gun violence and inappropriate use of firearms."
+gun.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,"The threat in the image is the display of a semiautomatic pistol on a mobile device, which could promote unsafe handling or attitudes towards firearms."
+gun.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,"The image presents a threat by depicting a firearm, which can promote or normalize gun-related violence."
+alright.mov,True,w970e4ns4twYAT3971SjwhbE-Tu6aiLqirM0jRIJdbo,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,
