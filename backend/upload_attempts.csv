@@ -1,10 +1,3 @@
 filename,status,key,wallet_address,message
-gun.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,"The threat in this image is the display of a semiautomatic pistol, which can represent potential violence or unsafe behavior."
-gun.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,"The threat in this image is the display of a semi-automatic pistol, which could pose a risk if handled irresponsibly or used with intent to harm."
-good.mov,True,JyoF_hL2IbOE2j6Hy0JrS4BQj11-7QT8b3AbNUbpj_E,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,
-bad.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,I'm unable to determine any threats based on the image provided.
-bad.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,I'm unable to identify any threats in the image provided.
-bad.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,"I'm sorry, but I can't determine the threat from the image provided."
-bad.mov,False,,0x7aCB8c6792477f7b201b7F3ECfAc93E554Bf046A,The inappropriate action in the image is the individual making a gesture that could be interpreted as offensive or threatening.
-gun.mov,False,,,"The threat in this image is the depiction of a semi-automatic pistol, which can be associated with violence or illegal activities."
-gun.mov,False,,,"The threat in this image is the presence of a semiautomatic pistol displayed on a mobile device, which can imply a potential for gun-related violence or unsafe handling of firearms."
+good.mov,True,JyoF_hL2IbOE2j6Hy0JrS4BQj11-7QT8b3AbNUbpj_E,,
+gun.mov,False,,,"The threat in this image is the display of a firearm, which may promote unsafe attitudes toward gun handling or violence."

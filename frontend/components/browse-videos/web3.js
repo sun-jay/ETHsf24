@@ -125,7 +125,7 @@ export async function get_items() {
     ]
     
     // Contract address (replace with the deployed contract address)
-    const contractAddress = "0x5DD029E6d12Cf2a5750cb02eE9BC8a7302914271";
+    const contractAddress = "0x4d0cF36E43ea99C020676f82FA39A096d97502DD";
     
     // Connect to SKALE Testnet
     const provider = new JsonRpcProvider(skaleRpcUrl);

@@ -77,13 +77,13 @@ export default function BrowserVideos() {
               // Parse the Proxy(Result) items into an array of JSON objects
               interface Video {
                 filename: string;
-                status: string;
+                status: boolean;
                 key: string;
                 sender: string;
                 message: string;
               }
               
-              const parsedVideos: Video[] = p.map((video: [string, string, string, string, string], index: number) => {
+              const parsedVideos: Video[] = p.map((video: [string, boolean, string, string, string], index: number) => {
                 return {
                   filename: video[0],  // Assuming video[0] is filename
                   status: video[1],    // Assuming video[1] is status
@@ -92,9 +92,14 @@ export default function BrowserVideos() {
                   message: video[4],   // Assuming video[4] is message
                 };
               });
+
+            //   filter out ones hwere status is false
+            const filteredVideos = parsedVideos.filter((video) => video.status == true);
+
+            console.log("Filtered Chain Videos:", filteredVideos); // Log the filtered JSONs
         
               // Save the parsed array into state
-              setChainVideoItems(parsedVideos);
+              setChainVideoItems(filteredVideos);
               console.log("Parsed Chain Videos:", parsedVideos); // Log the parsed JSONs
         
             } catch (error) {
@@ -128,7 +133,20 @@ export default function BrowserVideos() {
 
                 <div className={styles.browseVideosList}>
                     {/* Render the custom video items */}
-                    {Array.isArray(customVideoItems) && customVideoItems.length > 0 && (
+                    {Array.isArray(chainVideoItems) && chainVideoItems.length > 0 && (
+                        <div>
+                            <h2>Custom Video Items</h2>
+                            {chainVideoItems.map((item, index) => (
+                                <div key={index} className={styles.customVideoItem}>
+                                    <CustomVideo
+                                        blobID={item.key} // Pass blobID
+                                        title={item.filename} // Pass title or filename
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    {/* {Array.isArray(customVideoItems) && customVideoItems.length > 0 && (
                         <div>
                             <h2>Custom Video Items</h2>
                             {customVideoItems.map((item, index) => (
@@ -140,7 +158,7 @@ export default function BrowserVideos() {
                                 </div>
                             ))}
                         </div>
-                    )}
+                    )} */}
                     
 
                     {/* Existing video search logic */}

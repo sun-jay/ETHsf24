@@ -86,6 +86,8 @@ async def upload_file(file: UploadFile = File(...), wallet_address: str = Header
     classes = ["regular image or nice person", "rude gesture or threat"]
     res = parse_video(file_location, classes)
 
+    addr = '0x4d0cF36E43ea99C020676f82FA39A096d97502DD'
+
     for r,im in res:
 
         if r[classes[1]] > 0.5:
@@ -98,7 +100,7 @@ async def upload_file(file: UploadFile = File(...), wallet_address: str = Header
             df = pd.concat([df, new_row], ignore_index=True)
             df.to_csv('upload_attempts.csv', index=False)
             # send_to_chain(filename, status, key, message):
-            send_to_chain(file.filename, False, '', mes, addr = '0x5DD029E6d12Cf2a5750cb02eE9BC8a7302914271')
+            send_to_chain(file.filename, False, '', mes, addr = addr)
 
             # im = Image.open(file_location)
            
@@ -116,7 +118,7 @@ async def upload_file(file: UploadFile = File(...), wallet_address: str = Header
     df = pd.concat([df, new_row], ignore_index=True)
     df.to_csv('upload_attempts.csv', index=False)
     # send_to_chain(filename, status, key, message):
-    send_to_chain(file.filename, True, id, '', addr = '0x5DD029E6d12Cf2a5750cb02eE9BC8a7302914271')
+    send_to_chain(file.filename, True, id, '', addr = addr)
 
     # add to upload_attempts.csv
     return JSONResponse(content={"filename": file.filename, "message": "No inappropriate content detected, upload sucessful", 'status': 'True'})
